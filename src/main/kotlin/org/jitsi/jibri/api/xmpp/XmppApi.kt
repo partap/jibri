@@ -305,6 +305,7 @@ class XmppApi(
                         startIq.sessionId,
                         xmppEnvironment.callLogin,
                         youTubeStreamKey = startIq.streamId,
+                        rtmpUrl = startIq.streamUrl,
                         youTubeBroadcastId = startIq.youtubeBroadcastId),
                     EnvironmentContext(xmppEnvironment.name),
                     serviceStatusHandler
