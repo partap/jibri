@@ -78,7 +78,7 @@ class StreamingJibriService(
     private val jibriSelenium = JibriSelenium()
 
     init {
-        if (streamingParams.rtmpUrl) {
+        if (streamingParams.rtmpUrl != null) {
             sink = StreamSink(
                 url = "${streamingParams.rtmpUrl}",
                 streamingMaxBitrate = STREAMING_MAX_BITRATE,
