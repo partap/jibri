@@ -58,7 +58,7 @@ data class StreamingParams(
     /**
      * The full RTMP url to use for this stream
      */
-    val rtmpUrl: String,
+    val rtmpUrl: String? = null,
     /**
      * The YouTube broadcast ID for this stream, if we have it
      */
