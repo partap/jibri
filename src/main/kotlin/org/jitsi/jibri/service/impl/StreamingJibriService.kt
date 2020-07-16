@@ -54,7 +54,7 @@ data class StreamingParams(
     /**
      * The YouTube stream key to use for this stream
      */
-    val youTubeStreamKey: String,
+    val youTubeStreamKey: String? = null,
     /**
      * The full RTMP url to use for this stream
      */
