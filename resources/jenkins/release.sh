@@ -30,7 +30,7 @@ echo "Package version: ${VERSION}"
 REV=$(git log --pretty=format:'%h' -n 1)
 
 # bulding the debian package expects the file target/jibri.jar
-mv target/jibri-${MVNVER}-jar-with-dependencies.jar target/jibri.jar
+cp target/jibri-${MVNVER}-jar-with-dependencies.jar target/jibri.jar
 
 dch -v "${VERSION}-1" "Built from git. $REV"
 dch -D unstable -r ""
