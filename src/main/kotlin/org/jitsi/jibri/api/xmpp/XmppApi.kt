@@ -157,7 +157,7 @@ class XmppApi(
      * that this [JibriIq] was received on.
      */
     private fun handleJibriIq(jibriIq: JibriIq, mucClient: MucClient): IQ {
-        logger.info("Received JibriIq ${jibriIq.toXML()} from environment $mucClient")
+        logger.info("Received JibriIq (partap) ${jibriIq.toXML()} from environment $mucClient")
         val xmppEnvironment = xmppConfigs.find { it.xmppServerHosts.contains(mucClient.id) }
                 ?: return IQ.createErrorResponse(
                     jibriIq,
