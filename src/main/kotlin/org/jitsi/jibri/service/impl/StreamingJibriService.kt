@@ -88,18 +88,19 @@ class StreamingJibriService(
     private val jibriSelenium = JibriSelenium()
 
     init {
-        var rtmpUrl: String = streamingParams.rtmpUrl ?: "${YOUTUBE_URL}"
+        var rtmpUrl: String = streamingParams.rtmpUrl ?: "$YOUTUBE_URL"
 
         if (streamingParams.youTubeStreamKey != null && streamingParams.youTubeStreamKey.length > 0) {
             if (rtmpUrl.length > 0 && rtmpUrl[rtmpUrl.lastIndex] != '/') {
-                rtmpUrl = "${rtmpUrl}/${streamingParams.youTubeStreamKey}"
+                rtmpUrl = "$rtmpUrl/${streamingParams.youTubeStreamKey}"
             } else {
                 rtmpUrl = "${rtmpUrl}${streamingParams.youTubeStreamKey}"
             }
         }
 
         if (streamingParams.username != null && streamingParams.password != null) {
-            rtmpUrl = "${rtmpUrl} flashver=FMLE/3.0\\20(compatible;\\20FMSc/1.0) live=true pubUser=${streamingParams.username} pubPasswd=${streamingParams.password}"
+            rtmpUrl = "$rtmpUrl flashver=FMLE/3.0\\20(compatible;\\20FMSc/1.0) live=true " +
+                "pubUser=${streamingParams.username} pubPasswd=${streamingParams.password}"
         }
 
         sink = StreamSink(

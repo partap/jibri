@@ -60,7 +60,6 @@ data class StartServiceParams(
     val username: String? = null,
     val password: String? = null,
 
-
     /**
      * Params to be used if [RecordingSinkType] is [RecordingSinkType.GATEWAY]
      */
