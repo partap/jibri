@@ -53,12 +53,22 @@ data class StreamingParams(
     val callLoginParams: XmppCredentials,
     /**
      * The YouTube stream key to use for this stream
+     * (or streamid/stream name for generic rtmp servers)
      */
     val youTubeStreamKey: String? = null,
     /**
-     * The full RTMP url to use for this stream
+     * The base or full RTMP url to use for this stream, if supplied
+     * (defaults to YOUTUBE_URL)
      */
     val rtmpUrl: String? = null,
+    /**
+     * The username for the RTMP server, if needed
+     */
+    val username: String? = null,
+    /**
+     * The password for the RTMP server, if needed
+     */
+    val password: String? = null,
     /**
      * The YouTube broadcast ID for this stream, if we have it
      */
@@ -78,19 +88,26 @@ class StreamingJibriService(
     private val jibriSelenium = JibriSelenium()
 
     init {
-        if (streamingParams.rtmpUrl != null) {
-            sink = StreamSink(
-                url = "${streamingParams.rtmpUrl}",
-                streamingMaxBitrate = STREAMING_MAX_BITRATE,
-                streamingBufSize = 2 * STREAMING_MAX_BITRATE
-            )
-        } else {
-            sink = StreamSink(
-                url = "$YOUTUBE_URL/${streamingParams.youTubeStreamKey}",
-                streamingMaxBitrate = STREAMING_MAX_BITRATE,
-                streamingBufSize = 2 * STREAMING_MAX_BITRATE
-            )
+        var rtmpUrl: String = streamingParams.rtmpUrl ?: "${YOUTUBE_URL}"
+
+        if (streamingParams.youTubeStreamKey != null && streamingParams.youTubeStreamKey.length > 0) {
+            // add trailing / if not present
+            if (rtmpUrl.length > 0 && rtmpUrl[rtmpUrl.lastIndex] != '/') {
+            rtmpUrl = "${rtmpUrl}/"
+            }
+            // add youTubeStreamKey/streamid/streamname to base rtmp url
+            rtmpUrl = "${rtmpUrl}${streamingParams.youTubeStreamKey}"
         }
+
+        if (streamingParams.username != null && streamingParams.password != null) {
+            rtmpUrl = "${rtmpUrl} flashver=FMLE/3.0\\20(compatible;\\20FMSc/1.0) live=true pubUser=${streamingParams.username} pubPasswd=${streamingParams.password}"
+        }
+
+        sink = StreamSink(
+            url = rtmpUrl,
+            streamingMaxBitrate = STREAMING_MAX_BITRATE,
+            streamingBufSize = 2 * STREAMING_MAX_BITRATE
+        )
 
         registerSubComponent(JibriSelenium.COMPONENT_ID, jibriSelenium)
         registerSubComponent(FfmpegCapturer.COMPONENT_ID, capturer)

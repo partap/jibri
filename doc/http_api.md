@@ -44,7 +44,9 @@ None
 	},
 	"sinkType": String, // "stream" for streaming, "file" for recording
 	"youTubeStreamKey": String // If using "stream" above, this is the YouTube stream key to use
-	"rtmpUrl": String // If using "stream" above, this is the full RTMP URL to broadcast to. Overrides youtubeStreamKey if both are present.
+	"rtmpUrl": String // If using "stream" above, this is the RTMP URL to broadcast to. youtubeStreamKey is appended if both are present. If not present, it defaults to YouTube's URL (rtmp://a.rtmp.youtube.com/live2)
+  "username": String // Supplies username for RTMP server, if required by provider
+  "password": String // Supplies password for RTMP server, if required by provider
 }
 ```
 ##### Success Response

@@ -57,6 +57,10 @@ data class StartServiceParams(
     val sinkType: RecordingSinkType,
     val youTubeStreamKey: String? = null,
     val rtmpUrl: String? = null,
+    val username: String? = null,
+    val password: String? = null,
+
+
     /**
      * Params to be used if [RecordingSinkType] is [RecordingSinkType.GATEWAY]
      */
@@ -142,6 +146,9 @@ class HttpApi(
             RecordingSinkType.STREAM -> {
                 val youTubeStreamKey = startServiceParams.youTubeStreamKey
                 val rtmpUrl = startServiceParams.rtmpUrl
+                val username = startServiceParams.username
+                val password = startServiceParams.password
+
                 if (youTubeStreamKey == null && rtmpUrl == null) {
                     throw IllegalStateException("Stream key missing")
                 }
@@ -155,7 +162,9 @@ class HttpApi(
                         startServiceParams.sessionId,
                         callLoginParams,
                         youTubeStreamKey,
-                        rtmpUrl
+                        rtmpUrl,
+                        username,
+                        password
                     ),
                     environmentContext = null
                 )
