@@ -91,12 +91,11 @@ class StreamingJibriService(
         var rtmpUrl: String = streamingParams.rtmpUrl ?: "${YOUTUBE_URL}"
 
         if (streamingParams.youTubeStreamKey != null && streamingParams.youTubeStreamKey.length > 0) {
-            // add trailing / if not present
             if (rtmpUrl.length > 0 && rtmpUrl[rtmpUrl.lastIndex] != '/') {
-            rtmpUrl = "${rtmpUrl}/"
+                rtmpUrl = "${rtmpUrl}/${streamingParams.youTubeStreamKey}"
+            } else {
+                rtmpUrl = "${rtmpUrl}${streamingParams.youTubeStreamKey}"
             }
-            // add youTubeStreamKey/streamid/streamname to base rtmp url
-            rtmpUrl = "${rtmpUrl}${streamingParams.youTubeStreamKey}"
         }
 
         if (streamingParams.username != null && streamingParams.password != null) {
